@@ -1,14 +1,15 @@
 const app = require("./app");
 const mongoose = require("mongoose");
-const { URL, PORT = 3000 } = process.env;
 mongoose.set("strictQuery", false);
 const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 
-dotenv.config();
+const URL = process.env.URL;
+const PORT = process.env.PORT;
 
 async function startServer() {
   try {
-    await mongoose.connect(URL, {
+    await mongoose.connect(`${URL}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
