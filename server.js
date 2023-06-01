@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
 const app = require("./app");
-
-const { DB_HOST, PORT = 3000 } = process.env;
+const mongoose = require("mongoose");
+const { URL, PORT = 3000 } = process.env;
+mongoose.set("strictQuery", false);
 
 async function startServer() {
   try {
-    await mongoose.connect(DB_HOST);
+    await mongoose.connect(URL);
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`);
     });
