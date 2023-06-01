@@ -1,16 +1,18 @@
-const app = require("./app");
 const mongoose = require("mongoose");
-const { URL, PORT = 3000 } = process.env;
-mongoose.set("strictQuery", true);
+const app = require("./app");
 
-mongoose
-  .connect(URL)
-  .then(() => {
+const { DB_HOST, PORT = 3000 } = process.env;
+
+async function startServer() {
+  try {
+    await mongoose.connect(DB_HOST);
     app.listen(PORT, () => {
-      console.log("Database connection successful");
+      console.log(`Server is listening on port ${PORT}`);
     });
-  })
-  .catch((error) => {
-    console.log(error.message);
+  } catch (error) {
+    console.error(`Error connecting to the database: ${error.message}`);
     process.exit(1);
-  });
+  }
+}
+
+startServer();
